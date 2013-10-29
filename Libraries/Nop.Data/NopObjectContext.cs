@@ -21,7 +21,12 @@ namespace Nop.Data
         {
             //((IObjectContextAdapter) this).ObjectContext.ContextOptions.LazyLoadingEnabled = true;
         }
-        
+
+        public NopObjectContext( )
+            : base("DefaultConnection")
+        {
+            //((IObjectContextAdapter) this).ObjectContext.ContextOptions.LazyLoadingEnabled = true;
+        }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             //dynamically load all configuration

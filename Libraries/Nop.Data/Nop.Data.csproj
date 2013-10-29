@@ -86,6 +86,11 @@
     <Compile Include="Mapping\Shipping\ShipmentMap.cs" />
     <Compile Include="Mapping\Shipping\ShipmentItemMap.cs" />
     <Compile Include="Mapping\Tasks\ScheduleTaskMap.cs" />
+    <Compile Include="Migrations\201310291224074_polywell2013.cs" />
+    <Compile Include="Migrations\201310291224074_polywell2013.Designer.cs">
+      <DependentUpon>201310291224074_polywell2013.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="SqlServerDataProvider.cs" />
     <Compile Include="SqlCeDataProvider.cs" />
     <Compile Include="IDbContext.cs" />
@@ -177,7 +182,11 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201310291224074_polywell2013.resx">
+      <DependentUpon>201310291224074_polywell2013.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

@@ -1,0 +1,3 @@
+Payments.PurchaseOrder
+Widgets.NivoSlider
+Payments.CashOnDelivery

@@ -98,18 +98,22 @@ namespace Nop.Web.Framework
             builder.Register(x => (IEfDataProvider)x.Resolve<BaseDataProviderManager>().LoadDataProvider()).As<IDataProvider>().InstancePerDependency();
             builder.Register(x => (IEfDataProvider)x.Resolve<BaseDataProviderManager>().LoadDataProvider()).As<IEfDataProvider>().InstancePerDependency();
 
-            if (dataProviderSettings != null && dataProviderSettings.IsValid())
-            {
-                var efDataProviderManager = new EfDataProviderManager(dataSettingsManager.LoadSettings());
-                var dataProvider = (IEfDataProvider)efDataProviderManager.LoadDataProvider();
-                dataProvider.InitConnectionFactory();
+            builder.Register<IDbContext>(c => new NopObjectContext()).InstancePerHttpRequest();
 
-                builder.Register<IDbContext>(c => new NopObjectContext(dataProviderSettings.DataConnectionString)).InstancePerHttpRequest();
-            }
-            else
-            {
-                builder.Register<IDbContext>(c => new NopObjectContext(dataSettingsManager.LoadSettings().DataConnectionString)).InstancePerHttpRequest();
-            }
+            //if (dataProviderSettings != null && dataProviderSettings.IsValid())
+            //{
+            //    var efDataProviderManager = new EfDataProviderManager(dataSettingsManager.LoadSettings());
+            //    var dataProvider = (IEfDataProvider)efDataProviderManager.LoadDataProvider();
+            //    dataProvider.InitConnectionFactory();
+
+            //    //builder.Register<IDbContext>(c => new NopObjectContext(dataProviderSettings.DataConnectionString)).InstancePerHttpRequest(); 
+            //    builder.Register<IDbContext>(c => new NopObjectContext()).InstancePerHttpRequest();
+            //}
+            //else
+            //{
+            //    builder.Register<IDbContext>(c => new NopObjectContext()).InstancePerHttpRequest();
+            //    //builder.Register<IDbContext>(c => new NopObjectContext(dataSettingsManager.LoadSettings().DataConnectionString)).InstancePerHttpRequest();
+            //}
 
 
             builder.RegisterGeneric(typeof(EfRepository<>)).As(typeof(IRepository<>)).InstancePerHttpRequest();

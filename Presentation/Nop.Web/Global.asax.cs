@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
@@ -13,7 +14,9 @@ using Nop.Core.Data;
 using Nop.Core.Domain;
 using Nop.Core.Domain.Common;
 using Nop.Core.Infrastructure;
+using Nop.Services.Installation;
 using Nop.Services.Logging;
+using Nop.Services.Security;
 using Nop.Services.Tasks;
 using Nop.Web.Framework;
 using Nop.Web.Framework.EmbeddedViews;
@@ -280,6 +283,23 @@ namespace Nop.Web
                 return false;
 
             return EngineContext.Current.Resolve<StoreInformationSettings>().DisplayMiniProfilerInPublicStore;
+        }
+
+        protected void InstallData()
+        {
+            //now resolve installation service
+            var installationService = EngineContext.Current.Resolve<IInstallationService>();
+            installationService.InstallData("Admin@ploywell.com", "123456", false);
+
+            //register default permissions
+            //var permissionProviders = EngineContext.Current.Resolve<ITypeFinder>().FindClassesOfType<IPermissionProvider>();
+            var permissionProviders = new List<Type>();
+            permissionProviders.Add(typeof(StandardPermissionProvider));
+            foreach (var providerType in permissionProviders)
+            {
+                dynamic provider = Activator.CreateInstance(providerType);
+                EngineContext.Current.Resolve<IPermissionService>().InstallPermissions(provider);
+            }
         }
     }
 }

@@ -1,0 +1,2 @@
+DataProvider: sqlce
+DataConnectionString: Data Source=PENG-PC\SQLEXPRESS;Initial Catalog=NopCommerce32;Integrated Security=False;Persist Security Info=False;User ID=sa;Password=1246767;MultipleActiveResultSets=True
